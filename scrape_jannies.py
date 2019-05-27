@@ -25,7 +25,7 @@ def sleep_(sec):
 
 # アーティスト名：urlの辞書
 artists= {
-    "ジャニーズJr": "https://www.ticket.co.jp/sys/d/208.htm?&un=100",
+    "ジャニーズJr": "https://www. ticket.co.jp/sys/d/208.htm?&un=100",
     "NEWS": "https://www.ticket.co.jp/sys/d/223.htm?un=100",
     "セクシーゾーン":"https://www.ticket.co.jp/sys/d/10462.htm?un=100",
     }
@@ -47,32 +47,43 @@ def get_save(query_name, url):
 # 全件を保存する為にページ数を計上
 # ページ数は .pager-countクラスの最後のノードに格納されている
     pager_counts  = soup.select(".pager-count")
-    length = len(pager_counts)
-#     最後の.pager-countの番号：ページネーション数を計上 →63
-    last_page = pager_counts[length-1].find("a").text
+#   最後の.pager-countの番号：ページネーション数を計上
+    last_page = None
+    if(len(pager_counts)==0):
+        # そもそもページがないとき、ページ数は0
+        last_page=str(0)
+    elif (pager_counts[len(pager_counts)-1].find("a") ):
+        # １ページしかないとき、find("a")でなく直接ページ数textを取得
+        last_page = pager_counts[len(pager_counts)-1].find("a").text
+    elif(pager_counts):
+        last_page=  pager_counts[len(pager_counts)-1].text
+    
     print("総ページ数: "+last_page)
+    
+#     last_page数ループ
+    if(last_page== str(0)):
+        # ページ数が0なら処理終了
+        print("該当アーティストのチケット取引はありません。")
+    else:
+        for i in range(1, int(last_page)+1):
 
-#     1→63までループ
-    for i in range(1, int(last_page)+1):
+            print(query_name+"の"+str(i)+" ページ目のクローリングを開始...")
 
-        print(query_name+"の"+str(i)+" ページ目のクローリングを開始...")
+            url += ("&pn=" +last_page)
+            r = requests.get(url)
+            soup = BeautifulSoup(r.text, "html.parser")
+            print(str(i)+"ページ目取得完了...")
+    # 日付けからディレクトリ作成
+            date = formatted_today()
+            combined_path = query_name+"/"+date
+            os.makedirs(combined_path, exist_ok=True)
+    #     書き込み
+            with open (combined_path+"/"+"ticket-data"+str(i)+".html", mode="w", encoding="utf-8") as fw:
+                fw.write(soup.prettify())
+                print(query_name+"の"+str(i)+"ページ目の保存中...")
 
-        url += ("&pn=" +last_page)
-        r = requests.get(url)
-        soup = BeautifulSoup(r.text, "html.parser")
-        print(str(i)+"ページ目取得完了...")
-# 日付けからディレクトリ作成
-        date = formatted_today()
-        combined_path = query_name+"/"+date
-        os.makedirs(combined_path, exist_ok=True)
-#     書き込み
-        with open (combined_path+"/"+"ticket-data"+str(i)+".html", mode="w", encoding="utf-8") as fw:
-            fw.write(soup.prettify())
-            print(query_name+"の"+str(i)+"ページ目の保存中...")
-
-        print(query_name+"の"+str(i)+" ページ目の保存を完了しました。")
-        sleep_(2)
-
+            print(query_name+"の"+str(i)+" ページ目の保存を完了しました。")
+            sleep_(2)
 
 # get_save(url, name)
 
