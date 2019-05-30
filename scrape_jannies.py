@@ -25,7 +25,7 @@ def sleep_(sec):
 
 # アーティスト名：urlの辞書
 artists= {
-    "ジャニーズJr": "https://www. ticket.co.jp/sys/d/208.htm?&un=100",
+    "ジャニーズJr": "https://www.ticket.co.jp/sys/d/208.htm?&un=100",
     "NEWS": "https://www.ticket.co.jp/sys/d/223.htm?un=100",
     "セクシーゾーン":"https://www.ticket.co.jp/sys/d/10462.htm?un=100",
     }
