@@ -28,6 +28,7 @@ artists= {
     "ジャニーズJr": "https://www.ticket.co.jp/sys/d/208.htm?&un=100",
     "NEWS": "https://www.ticket.co.jp/sys/d/223.htm?un=100",
     "セクシーゾーン":"https://www.ticket.co.jp/sys/d/10462.htm?un=100",
+    "キスマイフットツー":"https://www.ticket.co.jp/sys/d/7097.htm?un=100",
     }
 
 
@@ -67,12 +68,12 @@ def get_save(query_name, url):
     else:
         for i in range(1, int(last_page)+1):
 
-            print(query_name+"の"+str(i)+" ページ目のクローリングを開始...")
+            print(query_name+"の"+str(i)+" / "+last_page+"ページ目のクローリングを開始...")
 
             url += ("&pn=" +last_page)
             r = requests.get(url)
             soup = BeautifulSoup(r.text, "html.parser")
-            print(str(i)+"ページ目取得完了...")
+            print(str(i)+" / "+last_page+"ページ目取得完了。")
     # 日付けからディレクトリ作成
             date = formatted_today()
             combined_path = query_name+"/"+date
@@ -80,9 +81,9 @@ def get_save(query_name, url):
     #     書き込み
             with open (combined_path+"/"+"ticket-data"+str(i)+".html", mode="w", encoding="utf-8") as fw:
                 fw.write(soup.prettify())
-                print(query_name+"の"+str(i)+"ページ目の保存中...")
+                print(query_name+"の"+str(i)+" / "+last_page+"ページ目の保存中...")
 
-            print(query_name+"の"+str(i)+" ページ目の保存を完了しました。")
+            print(query_name+"の"+str(i)+" / "+last_page+" ページ目の保存を完了しました。")
             sleep_(2)
 
 # get_save(url, name)
@@ -98,5 +99,4 @@ print_line()
 
 # 備考
 # CSSはダウンロードできない。一応ソースから手作業で探してくることはできた。
-
 # URLとアーティスト名はコマンドライン引数で渡せるべき
