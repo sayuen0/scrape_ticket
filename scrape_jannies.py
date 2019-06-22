@@ -5,13 +5,11 @@ import re
 import os
 import sys
 from time import sleep
+import datetime
 
-# 第一引数にURLを、第二引数にフォルダ名となる
-# アーティスト名を入れる
 
 #2019-03-12みたいな日付けを作る
 def formatted_today():
-    import datetime
     now = datetime.datetime.now()
     today = "{0:%Y-%m-%d}".format(now)
     return today
@@ -19,6 +17,7 @@ def formatted_today():
 def print_line():
     print("---------------------------------------------------------------------------------------------------------------------------------------")
 
+#webアクセスを連続ですると、対象サーバーに負荷が掛かりトラブルとなるため、数秒休憩を挟む
 def sleep_(sec):
     print("過剰な連続リクエスト回避のsleep:"+str(sec)+"秒")
     sleep(sec)
@@ -75,6 +74,7 @@ def get_save(query_name, url):
             soup = BeautifulSoup(r.text, "html.parser")
             print(str(i)+" / "+last_page+"ページ目取得完了。")
     # 日付けからディレクトリ作成
+    # ジャニーズJr/2019-06-19みたいな
             date = formatted_today()
             combined_path = query_name+"/"+date
             os.makedirs(combined_path, exist_ok=True)
@@ -88,6 +88,8 @@ def get_save(query_name, url):
 
 # get_save(url, name)
 
+# 第一引数にURLを、第二引数にフォルダ名となる
+# アーティスト名を入れる
 for name, url in artists.items():
     get_save(name,url)
     sleep_(2)
@@ -99,4 +101,3 @@ print_line()
 
 # 備考
 # CSSはダウンロードできない。一応ソースから手作業で探してくることはできた。
-# URLとアーティスト名はコマンドライン引数で渡せるべき

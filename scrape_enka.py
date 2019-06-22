@@ -67,5 +67,3 @@ get_save(name,url)
 print_line()
 print("全アーティストのクローリングを完了しました")
 print_line()
-
-    
