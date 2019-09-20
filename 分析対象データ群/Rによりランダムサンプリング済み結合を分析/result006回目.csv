@@ -1,0 +1,23 @@
+
+Call:
+lm(formula = data$price_per_unit ~ data$left_days + data$is_jannies + 
+    data$after + data$after_and_js_jannies, data = data)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-47762 -19616 -12116   2957 353251 
+
+Coefficients: (2 not defined because of singularities)
+                           Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                48762.29    2253.39  21.640  < 2e-16 ***
+data$left_days               -73.34      80.18  -0.915     0.36    
+data$is_jannies                  NA         NA      NA       NA    
+data$after                -21646.28    2633.37  -8.220 4.16e-16 ***
+data$after_and_js_jannies        NA         NA      NA       NA    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 46490 on 1597 degrees of freedom
+Multiple R-squared:  0.04325,	Adjusted R-squared:  0.04205 
+F-statistic:  36.1 on 2 and 1597 DF,  p-value: 4.653e-16
+
