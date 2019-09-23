@@ -1,0 +1,22 @@
+
+Call:
+lm(formula = data$price_per_unit ~ data$is_free_market + data$after + 
+    data$left_days)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+ -9437  -5037  -2497   1941  48113 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+(Intercept)         10437.38     410.25  25.441  < 2e-16 ***
+data$is_free_market  1396.16     657.79   2.123  0.03399 *  
+data$after          -2571.20     547.79  -4.694 2.97e-06 ***
+data$left_days        -34.37      11.78  -2.917  0.00359 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 8467 on 1281 degrees of freedom
+Multiple R-squared:  0.02201,	Adjusted R-squared:  0.01972 
+F-statistic:  9.61 on 3 and 1281 DF,  p-value: 2.823e-06
+
